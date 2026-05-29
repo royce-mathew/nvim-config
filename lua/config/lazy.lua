@@ -1,4 +1,3 @@
--- Boostrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = "https://github.com/folke/lazy.nvim.git"
@@ -16,7 +15,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 
--- Setup lazy.nvim
 require("lazy").setup({
   spec = {
     -- import/override with your plugins
@@ -27,6 +25,6 @@ require("lazy").setup({
   install = { colorscheme = { "habamax" } },
   -- automatically check for plugin updates
   checker = { enabled = true },
+  -- icons used by other plugins
+  icons = require("config.icons"),
 })
-
-
