@@ -10,7 +10,7 @@ local deps = {
   },
   {
     name = "fd",
-    cmd = "fd",
+    cmd = { "fd", "fdfind" },
     install = {
       win32 = "winget install -e --id sharkdp.fd",
       mac = "brew install fd",
@@ -42,9 +42,16 @@ local function check_and_install_deps()
   local missing = {}
   local current_os = get_os()
 
-  -- Find missing dependencies
   for _, dep in ipairs(deps) do
-    if vim.fn.executable(dep.cmd) == 0 then
+    local commands = type(dep.cmd) == "table" and dep.cmd or { dep.cmd }
+    local found = false
+    for _, cmd in ipairs(commands) do
+      if vim.fn.executable(cmd) == 1 then
+        found = true
+        break
+      end
+    end
+    if not found then
       table.insert(missing, dep)
     end
   end
